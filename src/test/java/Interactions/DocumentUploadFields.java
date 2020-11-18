@@ -88,7 +88,7 @@ public class DocumentUploadFields {
     }
 
     private void uploadFileInWindows(String documentUploadPath) {
-
+        documentPage.getUploadId().sendKeys(documentUploadPath);
     }
 
     private void setRevisionDate() {
