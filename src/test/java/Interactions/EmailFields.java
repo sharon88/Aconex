@@ -44,7 +44,8 @@ public class EmailFields {
         return toAddressActual;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(String subject) throws InterruptedException {
+        Thread.sleep(2000);
         common.waitForTheElementTobeClickable(emailPage.getSubject());
         emailPage.getSubject().sendKeys(subject);
     }

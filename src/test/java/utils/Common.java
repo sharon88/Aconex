@@ -39,6 +39,10 @@ public class Common {
         driver.switchTo().frame(driver.findElement(By.id("frameMain")));
     }
 
+    public void switchToDefaultFrame(){
+        driver.switchTo().defaultContent();
+    }
+
     public boolean checkIfElementDisplayed(WebElement element) {
         boolean isDisplayed;
         try {

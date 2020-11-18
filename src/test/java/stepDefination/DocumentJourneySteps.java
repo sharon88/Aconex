@@ -65,7 +65,7 @@ public class DocumentJourneySteps {
 
     @When("I search the document from document register")
     public void iSearchTheDocumentFromDocumentRegister() {
-        driver.switchTo().defaultContent();
+        common.switchToDefaultFrame();
         homePage.getDocumentNavbar().click();
         homePage.getDocumentRegister().click();
         common.waitForTheLoadingProgressTobeDismissed();
