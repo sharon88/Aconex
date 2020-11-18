@@ -5,6 +5,7 @@ import org.openqa.selenium.support.ui.Select;
 import pageObjects.DocumentPage;
 import utils.Common;
 import utils.OS;
+import utils.OsHelper;
 
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -79,9 +80,9 @@ public class DocumentUploadFields {
     }
 
     private void uploadDoc(String documentUploadPath) {
-        if (OS.MAC.toString().contains("MAC")){
+        if (OsHelper.getOperatingSystem().toString().contains("MAC")){
             uploadMediaByRobot(documentUploadPath);
-        } else if (OS.MAC.toString().contains("WIN")){
+        } else if (OsHelper.getOperatingSystem().toString().contains("WIN")){
             uploadFileInWindows(documentUploadPath);
         }
     }

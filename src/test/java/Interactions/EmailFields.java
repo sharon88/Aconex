@@ -45,6 +45,7 @@ public class EmailFields {
     }
 
     public void setSubject(String subject) {
+        common.waitForTheElementTobeClickable(emailPage.getSubject());
         emailPage.getSubject().sendKeys(subject);
     }
 
