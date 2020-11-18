@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -23,12 +24,12 @@ public class Base {
     public void initiateDriver() throws IOException {
         switch (OsHelper.getOperatingSystem()) {
             case MAC:
-                CHROME_DRIVER_PATH = BASE_PROJECT_PATH + "/drivers/macDrivers/chromedriver";
-                FIREFOX_DRIVER_PATH = BASE_PROJECT_PATH + "/drivers/macDrivers/geckodriver";
+                CHROME_DRIVER_PATH = BASE_PROJECT_PATH + File.separator + "drivers" + File.separator + "macDrivers" + File.separator + "chromedriver";
+                FIREFOX_DRIVER_PATH = BASE_PROJECT_PATH + File.separator + "drivers" + File.separator + "macDrivers" + File.separator + "geckodriver";
                 break;
             case WINDOWS:
-                CHROME_DRIVER_PATH = BASE_PROJECT_PATH + "/drivers/windowsDriver/chromedriver.exe";
-                FIREFOX_DRIVER_PATH = BASE_PROJECT_PATH + "/drivers/windowsDriver/geckodriver.exe";
+                CHROME_DRIVER_PATH = BASE_PROJECT_PATH + File.separator + "drivers" + File.separator + "windowsDriver" + File.separator + "chromedriver.exe";
+                FIREFOX_DRIVER_PATH = BASE_PROJECT_PATH + File.separator + "drivers" + File.separator + "windowsDriver" + File.separator + "geckodriver.exe";
         }
         String browser = getPropertyValue("browser");
         switch (browser) {
@@ -53,14 +54,14 @@ public class Base {
 
 
     public String getPropertyValue(String key) throws IOException {
-        String propertyPath = BASE_PROJECT_PATH + "/src/test/java/resources/data.properties";
+        String propertyPath = BASE_PROJECT_PATH + File.separator + "src" + File.separator + "test" + File.separator + "java" + File.separator + "resources" + File.separator + "data.properties";
         Properties properties = new Properties();
         FileInputStream fileInputStream = new FileInputStream(propertyPath);
         properties.load(fileInputStream);
         return properties.getProperty(key);
     }
 
-    protected void closeDriver(Scenario scenario) throws IOException {
+    protected void closeDriver(Scenario scenario) {
         try {
             if (scenario.isFailed()) {
                 final byte[] screenshot = ((TakesScreenshot) driver)

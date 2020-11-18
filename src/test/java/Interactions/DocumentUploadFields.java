@@ -4,10 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import pageObjects.DocumentPage;
 import utils.Common;
-import utils.OS;
 import utils.OsHelper;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -19,8 +19,7 @@ public class DocumentUploadFields {
     private Common common;
 
     private final static String BASE_PROJECT_PATH = System.getProperty("user.dir");
-    private final static String DOCUMENT_UPLOAD_PATH = BASE_PROJECT_PATH + "/uploadSection/CodingAssignment.docx";
-
+    private final static String DOCUMENT_UPLOAD_PATH = BASE_PROJECT_PATH +  File.separator + "uploadSection" +  File.separator+ "CodingAssignment.docx";
 
     public DocumentUploadFields(WebDriver driver) {
         this.driver = driver;
@@ -28,7 +27,7 @@ public class DocumentUploadFields {
         common = new Common(driver);
     }
 
-    public void enterTheRequiredDocumentFields(String documentName) throws InterruptedException {
+    public void enterTheRequiredDocumentFields(String documentName) throws AWTException {
         common.waitForTheLoadingProgressTobeDismissed();
         common.switchToIFrame();
         clickOnAutoDocumentNoCheckbox();
@@ -73,13 +72,13 @@ public class DocumentUploadFields {
         select.selectByVisibleText("Environment");
     }
 
-    private void uploadFile() {
+    private void uploadFile() throws AWTException {
         documentPage.getUploadId().click();
         uploadDoc(DOCUMENT_UPLOAD_PATH);
         
     }
 
-    private void uploadDoc(String documentUploadPath) {
+    private void uploadDoc(String documentUploadPath) throws AWTException {
         if (OsHelper.getOperatingSystem().toString().contains("MAC")){
             uploadMediaByRobot(documentUploadPath);
         } else if (OsHelper.getOperatingSystem().toString().contains("WIN")){
@@ -87,8 +86,24 @@ public class DocumentUploadFields {
         }
     }
 
-    private void uploadFileInWindows(String documentUploadPath) {
-        documentPage.getUploadId().sendKeys(documentUploadPath);
+    //Need to run as a admin in the windows system to upload the file.
+    private void uploadFileInWindows(String documentUploadPath) throws AWTException {
+        StringSelection strSelection = new StringSelection(documentUploadPath);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(strSelection, null);
+
+        Robot robot = new Robot();
+
+        robot.delay(300);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.delay(200);
+        robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
     private void setRevisionDate() {

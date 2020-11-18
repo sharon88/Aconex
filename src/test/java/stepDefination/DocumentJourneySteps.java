@@ -12,6 +12,8 @@ import utils.Base;
 import utils.Common;
 import utils.Helper;
 
+import java.awt.*;
+
 import static org.testng.Assert.assertEquals;
 import static utils.WebStrings.*;
 
@@ -42,7 +44,7 @@ public class DocumentJourneySteps {
     }
 
     @When("^I enter all the necessary fields and upload the document$")
-    public void iEnterAllTheNecessaryFieldsAndUploadTheDocument() throws InterruptedException {
+    public void iEnterAllTheNecessaryFieldsAndUploadTheDocument() throws InterruptedException, AWTException {
         DocumentUploadFields documentUploadFields = new DocumentUploadFields(driver);
         documentName = DOCUMENT_NAME + Helper.generateRandomNumber();
         documentUploadFields.enterTheRequiredDocumentFields(documentName);
